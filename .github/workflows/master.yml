@@ -30,7 +30,7 @@ jobs:
 
       - name: Application Cache Clear
         run: |
-          php artisan optimize:clear
+          php artisan config:clear
           php artisan config:cache
 
       - name: Run tests
