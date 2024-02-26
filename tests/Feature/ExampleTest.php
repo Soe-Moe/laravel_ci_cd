@@ -7,14 +7,6 @@ use Tests\TestCase;
 
 class ExampleTest extends TestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        // Set the APP_KEY environment variable for testing
-        putenv('APP_KEY=' . env('APP_KEY'));
-    }
-
     /**
      * A basic test example.
      */
