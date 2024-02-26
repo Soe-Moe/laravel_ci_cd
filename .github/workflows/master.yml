@@ -10,6 +10,7 @@ jobs:
     steps:
       - name: Run tests
         run: |
+          cd /var/www/laravel_ci_cd
           php artisan test
           test_result=$?
           if [ $test_result -ne 0 ]; then
