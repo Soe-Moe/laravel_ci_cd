@@ -21,6 +21,13 @@ jobs:
       - name: Directory Permissions
         run: chmod -R 777 storage bootstrap/cache .env
 
+      - name: Create View & Session Directory
+        run: mkdir -p storage/framework/views storage/framework/sessions
+
+      # Generate the Application Key
+      - name: Generate Application Key
+        run: php artisan key:generate
+
       - name: Application Cache Clear
         run: |
           php artisan config:clear
