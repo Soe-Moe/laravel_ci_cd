@@ -17,4 +17,4 @@ jobs:
           script: |
             cd /var/www/laravel_ci_cd
             git pull origin master
-            git status
+            php artisan test
