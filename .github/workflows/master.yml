@@ -28,6 +28,11 @@ jobs:
         env:
           APP_KEY: ${{ steps.key.outputs.stdout }}
 
+      - name: Application Cache Clear
+        run: |
+          php artisan optimize:clear
+          php artisan config:cache
+
       - name: Run tests
         run: |
           php artisan test
