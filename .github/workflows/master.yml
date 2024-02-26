@@ -3,11 +3,25 @@ name: Deploy
 on:
   push:
     branches: [master]
+
 jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run tests
+        run: |
+          php artisan test
+          test_result=$?
+          if [ $test_result -ne 0 ]; then
+            echo "Tests failed. Exiting..."
+            exit $test_result
+          fi
+
       - name: Deploy using ssh
+        if: ${{ success() }}
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
@@ -17,4 +31,3 @@ jobs:
           script: |
             cd /var/www/laravel_ci_cd
             git pull origin master
-            php artisan test
