@@ -19,14 +19,11 @@ jobs:
         run: cp .env.example .env
 
       - name: Directory Permissions
-        run: chmod -R 777 storage bootstrap/cache .env
+        run: chmod -R 777 storage bootstrap/cache
 
       # Set APP_KEY environment variable
-      - name: Set APP_KEY
-        run: php artisan key:generate --show
-        id: key
-        env:
-          APP_KEY: ${{ steps.key.outputs.stdout }}
+      - name: Generate key
+        run: php artisan key:generate
 
       - name: Application Cache Clear
         run: |
