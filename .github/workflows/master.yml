@@ -14,8 +14,15 @@ jobs:
       - name: Install dependencies
         run: composer install
 
+      - name: Generate encryption key
+        run: php artisan key:generate --show
+        id: key
+        env:
+          APP_KEY: ${{ steps.key.outputs.stdout }}
+
       - name: Run tests
         run: |
+          cp .env.example .env
           php artisan test
           test_result=$?
           if [ $test_result -ne 0 ]; then
