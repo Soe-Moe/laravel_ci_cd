@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy - Laravel Development
 
 on:
   push:
@@ -12,7 +12,6 @@ jobs:
     # Environment variables available to all jobs
     env:
       PROJECT_PATH: /var/www/laravel_ci_cd
-      COMPOSER_VERSION: 2.7.1
       PHP_VERSION: 8.1
       DB_DATABASE: laravel_ci_cd
       DB_ALLOW_EMPTY_PASSWORD: yes
