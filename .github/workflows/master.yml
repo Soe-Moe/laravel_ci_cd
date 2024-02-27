@@ -1,4 +1,4 @@
-name: Deploy - Laravel Development
+name: Deploy -- Laravel Development
 
 on:
   push:
