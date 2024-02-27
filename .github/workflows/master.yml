@@ -43,6 +43,12 @@ jobs:
           php artisan config:cache
 
       - name: Run tests
+        env:
+          DB_PORT: ${{ job.services.mysql.ports[3306] }}
+          DB_CONNECTION: mysql
+          DB_USER: root
+          DB_PASSWORD: ""
+          DB_DATABASE: laravel_ci_cd
         run: |
           php artisan test
           test_result=$?
@@ -50,10 +56,6 @@ jobs:
             echo "Tests failed. Exiting..."
             exit $test_result
           fi
-        env:
-          DB_PORT: ${{ job.services.mysql.ports[3306] }}
-          DB_CONNECTION: mysql
-          DB_DATABASE: laravel_ci_cd
 
       - name: Deploy using ssh
         if: ${{ success() }}
