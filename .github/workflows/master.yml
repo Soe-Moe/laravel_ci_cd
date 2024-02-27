@@ -53,3 +53,6 @@ jobs:
           script: |
             cd /var/www/laravel_ci_cd
             git pull origin master
+            composer update --prefer-dist --no-progress --no-suggest
+            php artisan migrate
+            php artisan optimize:clear
