@@ -42,6 +42,9 @@ jobs:
         with:
           php-version: ${{ env.PHP_VERSION }}
 
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist
+
       # Copy .env.example to .env
       - name: Copy .env.example to .env
         run: cp .env.example .env
