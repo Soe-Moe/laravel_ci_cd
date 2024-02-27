@@ -10,13 +10,19 @@ jobs:
 
     env:
       COMPOSER_VERSION: 2.7.1
+      PHP_VERSION: 8.1
+      DB_DATABASE: laravel_ci_cd
+      DB_HOST: 127.0.0.1
+      DB_PORT: 3306
+      DB_USERNAME: root
+      DB_PASSWORD: ""
 
     services:
       mysql:
         image: mysql:8.2
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          MYSQL_DATABASE: laravel_ci_cd
+          MYSQL_DATABASE: ${{ env.DB_DATABASE }}
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
@@ -28,7 +34,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.1
+          php-version: ${{ env.PHP_VERSION }}
 
       - name: Directory Permissions
         run: chmod -R 777 storage bootstrap/cache
@@ -70,11 +76,11 @@ jobs:
 
       - name: Run tests
         env:
-          DB_HOST: 127.0.0.1 # Use localhost to connect to the MySQL service
-          DB_PORT: ${{ job.services.mysql.ports[3306] }} # Get the mapped port of the MySQL service
-          DB_DATABASE: laravel_ci_cd
-          DB_USERNAME: root
-          DB_PASSWORD: ""
+          DB_HOST: ${{ env.DB_HOST }}
+          DB_PORT: ${{ env.DB_PORT }}
+          DB_DATABASE: ${{ env.DB_DATABASE }}
+          DB_USERNAME: ${{ env.DB_USERNAME }}
+          DB_PASSWORD: ${{ env.DB_PASSWORD }}
         run: |
           php artisan test
           test_result=$?
