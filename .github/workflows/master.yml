@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest
+        run: composer install
 
       # Copy .env.example to .env
       - name: Copy .env.example to .env
@@ -53,6 +53,6 @@ jobs:
           script: |
             cd /var/www/laravel_ci_cd
             git pull origin master
-            composer update --prefer-dist --no-progress --no-suggest
+            composer update
             php artisan migrate
             php artisan optimize:clear
