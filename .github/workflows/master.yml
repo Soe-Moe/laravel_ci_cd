@@ -15,7 +15,7 @@ jobs:
         run: chmod -R 777 storage bootstrap/cache
 
       - name: Create View & Session Directory
-        run: mkdir -p storage/framework/views storage/framework/sessions storage/framework/cache
+        run: mkdir -p storage/framework/{views,sessions,cache}
 
       - name: Install dependencies
         run: composer install
