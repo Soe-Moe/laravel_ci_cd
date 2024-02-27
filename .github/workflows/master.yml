@@ -7,6 +7,17 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+          MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
+          MYSQL_USER: ${{ secrets.MYSQL_USER }}
+          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -18,7 +29,7 @@ jobs:
         run: mkdir -p storage/framework/{views,sessions,cache}
 
       - name: Install dependencies
-        run: composer install
+        run: composer install > dev/null 2>&1
 
       # Copy .env.example to .env
       - name: Copy .env.example to .env
@@ -52,7 +63,7 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /var/www/laravel_ci_cd
-            git pull origin master
-            composer update
+            git pull origin master > /dev/null 2>&1
+            composer update > /dev/null 2>&1
             php artisan migrate
             php artisan optimize:clear
