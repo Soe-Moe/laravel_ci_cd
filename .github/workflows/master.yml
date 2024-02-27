@@ -50,6 +50,8 @@ jobs:
             echo "Tests failed. Exiting..."
             exit $test_result
           fi
+        env:
+          DB_PORT: ${{ job.services.mysql.ports[3306] }}
 
       - name: Deploy using ssh
         if: ${{ success() }}
