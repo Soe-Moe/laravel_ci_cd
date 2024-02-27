@@ -22,7 +22,7 @@ jobs:
         run: chmod -R 777 storage bootstrap/cache
 
       - name: Create View & Session Directory
-        run: mkdir -p storage/framework/views storage/framework/sessions
+        run: mkdir -p storage/framework/views storage/framework/sessions storage/framework/cache
 
       # Generate the Application Key
       - name: Generate Application Key
